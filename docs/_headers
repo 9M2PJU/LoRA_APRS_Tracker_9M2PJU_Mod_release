@@ -1,0 +1,17 @@
+/*
+  X-Content-Type-Options: nosniff
+
+/*.json
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-cache
+
+/*.bin
+  Content-Type: application/octet-stream
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-cache
+
+/*.js
+  Content-Type: application/javascript
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-cache

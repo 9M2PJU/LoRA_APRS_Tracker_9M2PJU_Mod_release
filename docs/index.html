@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9M2PJU Mod LoRa APRS Tracker Firmware Web Installer - Browser-Based ESP32 Flash</title>
+    <meta name="description" content="Install 9M2PJU Mod LoRa APRS Tracker firmware directly from your browser - no Arduino IDE, no USB drivers, no app needed. ESP32 LoRa APRS tracker for the Heltec Wireless Tracker with smart beaconing, APRS messaging, Winlink, BLN bulletins, SOTA/POTA reports, and APRSMY Sunday Net check-in. Tuned for Malaysian ham radio use.">
+    <meta name="keywords" content="LoRa APRS, APRS tracker, ESP32, Heltec Wireless Tracker, ham radio, amateur radio, firmware, web flasher, browser install, 9M2PJU, Malaysia, smart beaconing, Winlink, SOTA, POTA, BLN bulletins, APRSMY, 433 MHz">
+    <meta name="author" content="9M2PJU">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#041326">
+    <link rel="canonical" href="https://lora.hamradio.my/">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="9M2PJU Ham Radio Projects">
+    <meta property="og:title" content="9M2PJU Mod LoRa APRS Tracker - Browser-Based Firmware Installer">
+    <meta property="og:description" content="Install LoRa APRS Tracker firmware directly from your browser. ESP32 LoRa APRS tracker for Heltec Wireless Tracker with smart beaconing, APRS messaging, Winlink, BLN bulletins, SOTA/POTA reports. No Arduino IDE or USB drivers needed.">
+    <meta property="og:url" content="https://lora.hamradio.my/">
+    <meta property="og:image" content="https://lora.hamradio.my/logo.png">
+    <meta property="og:image:alt" content="9M2PJU Mod LoRa APRS Tracker firmware installer">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@9M2PJU">
+    <meta name="twitter:creator" content="@9M2PJU">
+    <meta name="twitter:title" content="9M2PJU Mod LoRa APRS Tracker - Browser-Based Firmware Installer">
+    <meta name="twitter:description" content="Install LoRa APRS Tracker firmware directly from your browser. ESP32 LoRa APRS tracker for Heltec Wireless Tracker with smart beaconing, APRS messaging, Winlink, BLN bulletins, SOTA/POTA reports.">
+    <meta name="twitter:image" content="https://lora.hamradio.my/logo.png">
+    <meta name="twitter:image:alt" content="9M2PJU Mod LoRa APRS Tracker firmware installer">
+
+    <!-- Structured data for search engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "9M2PJU Mod LoRa APRS Tracker",
+      "operatingSystem": "ESP32",
+      "applicationCategory": "Firmware",
+      "softwareVersion": "v2.0",
+      "url": "https://lora.hamradio.my/",
+      "downloadUrl": "https://lora.hamradio.my/",
+      "description": "ESP32 LoRa APRS tracker firmware for the Heltec Wireless Tracker board. Forked from CA2RXU's LoRa APRS Tracker and tuned for Malaysian use cases with smart beaconing presets for hiking/SOTA, motorcycle, and car. Supports APRS messaging, Winlink, BLN bulletins, SOTA/POTA reports, and APRSMY Sunday Net check-in.",
+      "author": {
+        "@type": "Person",
+        "name": "9M2PJU",
+        "url": "https://hamradio.my/"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Browser-based firmware install (no Arduino IDE needed)",
+        "Smart beaconing presets (Runner/Hiking, Motorcycle, Car)",
+        "APRS messaging and Winlink support",
+        "BLN bulletin reception with 500 km distance filter",
+        "SOTA and POTA spot/alert reports via APRS Bot",
+        "APRSMY Sunday Net check-in",
+        "LoRa 433.400 MHz (Malaysia)",
+        "Heltec Wireless Tracker (ESP32-S3 + ST7735 TFT)"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I install the LoRa APRS Tracker firmware?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Open lora.hamradio.my in Chrome or Edge on a phone or computer, connect your Heltec Wireless Tracker via USB, click the Install button, and the firmware flashes directly in your browser. No Arduino IDE, no USB drivers, and no app installation required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What hardware do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You need a Heltec Wireless Tracker board (ESP32-S3 with LoRa and a ST7735 TFT display), a USB-C cable, and a web browser that supports Web Serial (Chrome, Edge, or Opera on desktop or Android). Firefox and Safari do not support Web Serial."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this firmware free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the 9M2PJU Mod LoRa APRS Tracker is open source and free to install. It is a fork of CA2RXU's LoRa APRS Tracker, modified by 9M2PJU for Malaysian ham radio use with tuned smart beaconing presets, APRSMY Sunday Net check-in, BLN bulletins, and SOTA/POTA reports."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What LoRa frequency does it use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The default frequency is 433.400 MHz, which is legal for amateur radio use in Malaysia. The frequency can be changed in the web admin UI or on-device configuration menu to match your local regulations."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="module" src="install-button.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #0d1b2a 0%, #050f1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border-top: 3px solid #ff5252;
+        }
+        .container { max-width: 700px; width: 100%; text-align: center; }
+        h1 {
+            font-size: 2em;
+            margin: 30px 0 10px 0;
+            color: #4a9eff;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+        }
+        .subtitle { font-size: 1.1em; color: #8ab8f0; margin-bottom: 30px; }
+        .card {
+            background: rgba(15, 30, 55, 0.85);
+            border: 1px solid #1a3a6a;
+            border-left: 4px solid #ff5252;
+            border-radius: 16px;
+            padding: 40px 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .device-label { font-size: 1.3em; font-weight: 600; margin-bottom: 15px; color: #6ab0ff; }
+        .install-btn-wrapper { display: flex; justify-content: center; margin: 20px 0; }
+        .install-btn-wrapper button {
+            background: #1565d8;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 48px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(21, 101, 216, 0.5);
+            transition: all 0.2s;
+        }
+        .install-btn-wrapper button:hover {
+            background: #1976e8;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+            transform: translateY(-1px);
+        }
+        .install-btn-wrapper button:active {
+            transform: translateY(0);
+        }
+        .info {
+            text-align: left; margin: 30px 0; padding: 20px;
+            background: rgba(10, 20, 40, 0.7); border-radius: 12px; border-left: 4px solid #ff5252;
+        }
+        .info h2 { font-size: 1.2em; color: #6ab0ff; margin-bottom: 12px; }
+        .info ul { list-style: none; padding-left: 5px; }
+        .info li { margin: 8px 0; line-height: 1.6; padding-left: 20px; position: relative; }
+        .info li::before { content: ">"; position: absolute; left: 0; color: #ff5252; font-weight: bold; }
+        .warning {
+            background: rgba(80, 60, 10, 0.5); border-left: 4px solid #d4a017;
+            padding: 15px 20px; border-radius: 8px; margin: 20px 0; text-align: left;
+        }
+        .warning h2 { color: #d4a017; font-size: 1.1em; margin-bottom: 8px; }
+        .warning p { line-height: 1.5; font-size: 0.95em; }
+        .footer { margin: 40px 0 20px 0; font-size: 0.85em; color: #506080; line-height: 1.6; }
+        .footer a { color: #6ab0ff; text-decoration: none; }
+        .footer a:hover { color: #FFD700; text-decoration: underline; }
+        #browserWarning { display: none; background: rgba(80, 30, 30, 0.7); border: 1px solid #a04040; border-radius: 8px; padding: 15px; margin: 20px 0; color: #e0a0a0; }
+        code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        details { margin: 12px 0; border: 1px solid #1a3a6a; border-left: 4px solid #ff5252; border-radius: 8px; background: rgba(10, 20, 40, 0.5); overflow: hidden; }
+        details summary { padding: 10px 16px; cursor: pointer; font-weight: 600; color: #6ab0ff; list-style: none; display: flex; align-items: center; gap: 8px; user-select: none; }
+        details summary::-webkit-details-marker { display: none; }
+        details summary::before { content: "\25B6"; font-size: 0.7em; transition: transform 0.2s; color: #FFD700; }
+        details[open] summary::before { transform: rotate(90deg); }
+        details summary:hover { background: rgba(20, 40, 70, 0.5); }
+        details .details-content { padding: 0 16px 14px 16px; }
+        /* Donation popup */
+        #donateModal {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px);
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        #donateModal.open { display: flex; }
+        .donate-card {
+            background: linear-gradient(160deg, #0f1e38 0%, #0a1428 100%);
+            border: 1px solid #1a3a6a; border-left: 4px solid #ff5252; border-radius: 18px;
+            max-width: 460px; width: 100%; padding: 32px 28px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
+            text-align: center; position: relative;
+            animation: donatePop 0.3s ease-out;
+        }
+        @keyframes donatePop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .donate-card .donate-close {
+            position: absolute; top: 10px; right: 14px;
+            background: none; border: none; color: #506080;
+            font-size: 1.6em; cursor: pointer; line-height: 1; padding: 4px;
+        }
+        .donate-card .donate-close:hover { color: #8ab8f0; }
+        .donate-card h2 { color: #FFD700; font-size: 1.4em; margin-bottom: 8px; }
+        .donate-card .donate-heart { font-size: 2.2em; margin-bottom: 6px; }
+        .donate-card p { color: #c0d0e8; line-height: 1.6; font-size: 0.95em; margin-bottom: 18px; }
+        .donate-btns { display: flex; flex-direction: column; gap: 10px; }
+        .donate-btns a {
+            display: block; padding: 13px 20px; border-radius: 10px;
+            font-weight: 600; text-decoration: none; font-size: 1em;
+            transition: all 0.2s;
+        }
+        .donate-btn-bmc { background: #ffdd00; color: #000; }
+        .donate-btn-bmc:hover { background: #ffe44d; transform: translateY(-1px); }
+        .donate-btn-wise { background: #163300; color: #9fe870; border: 1px solid #2a6b00; }
+        .donate-btn-wise:hover { background: #1f4a00; transform: translateY(-1px); }
+        .donate-btn-gs { background: rgba(255,255,255,0.06); color: #8ab8f0; border: 1px solid #1a3a6a; }
+        .donate-btn-gs:hover { background: rgba(255,255,255,0.12); }
+        .donate-qr {
+            margin: 4px auto 16px auto; display: block;
+            width: 200px; height: 200px; border-radius: 12px;
+            background: #fff; padding: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+        .donate-qr-label { color: #FFD700; font-size: 0.9em; font-weight: 600; margin-bottom: 4px; }
+        .donate-qr-hint { color: #8090b0; font-size: 0.78em; margin-bottom: 14px; }
+        .donate-card .donate-footer { margin-top: 14px; font-size: 0.8em; color: #506080; }
+        /* Floating donate button */
+        #donateFloat {
+            position: fixed; bottom: 20px; right: 20px; z-index: 900;
+            background: #1565d8; color: #fff; border: none; border-radius: 50px;
+            padding: 12px 20px; font-size: 0.95em; font-weight: 600; cursor: pointer;
+            box-shadow: 0 4px 16px rgba(21, 101, 216, 0.6); transition: all 0.2s;
+            display: flex; align-items: center; gap: 6px;
+        }
+        #donateFloat:hover { background: #1976e8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6); }
+        #downloadCounter { padding: 8px 16px; border-radius: 8px; background: rgba(10, 20, 40, 0.5); display: inline-block; border-left: 3px solid #ff5252; }
+        #downloadCounter .counter-num { font-size: 1.4em; font-weight: bold; color: #FFD700; }
+        #downloadCounter .counter-suffix { color: #8ab8f0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="9M2PJU Logo" style="width: 120px; height: 120px; border-radius: 20px; margin: 20px 0 10px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <h1>9M2PJU Mod LoRa APRS Tracker</h1>
+        <p class="subtitle">Firmware Web Installer &middot; Heltec Wireless Tracker</p>
+
+        <div class="card">
+            <div class="device-label">Heltec Wireless Tracker (ESP32-S3 + ST7735 TFT)</div>
+            <div class="install-btn-wrapper">
+                <esp-web-install-button
+                    manifest="manifest-heltec-wireless-tracker.json?v=22">
+                    <button slot="activate">INSTALL</button>
+                </esp-web-install-button>
+            </div>
+            <div id="installFallback" style="display:none; margin-top: 20px;">
+                <p style="color: #d4a017; margin-bottom: 15px;">
+                    INSTALL button not working? Your browser may be blocking it.
+                </p>
+                <p style="margin-bottom: 10px;">
+                    Try <strong>Chrome Incognito mode</strong>. Or turn off browser add-ons and try again.
+                </p>
+            </div>
+            <p style="font-size: 0.9em; color: #6080a0;">
+                Click INSTALL, pick your device's USB port,<br>
+                and the firmware installs right from your browser.
+            </p>
+            <div id="downloadCounter" style="margin-top: 15px; font-size: 0.85em; color: #506080;">
+                <span id="counterLabel">Loading install count&hellip;</span>
+            </div>
+        </div>
+
+        <div id="rebootMessage" class="warning" style="display: none;">
+            <h2>Done! Now restart and set up your tracker</h2>
+            <p>
+                Firmware installed. If your tracker did not restart on its own, do this:
+            </p>
+            <ul style="list-style: none; padding-left: 5px; margin-top: 10px;">
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">1.</span>
+                    Press the <strong>RST</strong> button once (or unplug and plug back in)
+                </li>
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">2.</span>
+                    Your tracker starts up with the new firmware
+                </li>
+            </ul>
+            <p style="margin-top: 15px;">
+                Then turn on the tracker WiFi and change your settings from a web page:
+            </p>
+            <ul style="list-style: none; padding-left: 5px; margin-top: 5px;">
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">3.</span>
+                    Turn on the tracker <strong>WiFi</strong> (follow the device menu)
+                </li>
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">4.</span>
+                    On your phone or computer, join WiFi: <strong>LoRaTracker-AP</strong> / password: <strong>1234567890</strong>
+                </li>
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">5.</span>
+                    Open <strong>192.168.4.1</strong> in your browser and adjust your settings
+                </li>
+            </ul>
+        </div>
+
+        <div id="browserWarning" class="warning">
+            <h2>Wrong browser</h2>
+            <p>
+                You need <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong> to install.
+                Firefox and Safari do not work. Please switch to Chrome or Edge.
+            </p>
+        </div>
+
+        <div class="info">
+            <h2>What you get</h2>
+            <ul>
+                <li>Callsign: <strong>9M2PJU-7</strong> on all 3 profiles</li>
+                <li>LoRa frequency: <strong>433.400 MHz</strong> (Malaysia)</li>
+                <li>LoRa label: <strong>LoRa[MY]</strong></li>
+                <li>Clock: <strong>Malaysia Time (UTC+8)</strong></li>
+                <li><strong>APRSMYSunday</strong> net check-in &amp; stats query (Messages menu)</li>
+                <li><strong>SOTA &amp; POTA</strong> spots and alerts (Reports menu)</li>
+                <li><strong>HF Prop Report</strong> - HF propagation conditions from 9M2PJU-4 bot (Reports menu)</li>
+                <li><strong>Bulletins (BLN)</strong> - receive &amp; store APRS broadcast bulletins with 500 km filter + dedup, separate view + on/off toggle (Messages &amp; Configuration menus)</li>
+                <li>Centered text on all screens</li>
+                <li>Navy blue header bar with yellow text</li>
+                <li>Cyan menu items, yellow selection indicator</li>
+                <li>Orange button instructions</li>
+                <li>Color text for GPS, battery, altitude, messages</li>
+                <li>White APRS symbol</li>
+                <li>Status bar: GPS lock / BT / idle</li>
+                <li>Startup text: "9M2PJU Mod" + version date</li>
+                <li>GPS Eco Mode off (GPS always active)</li>
+                <li>Profile 3 symbol: motorcycle</li>
+                <li>Smart Beaconing tuned for Malaysia (20-33% fewer TX, battery-saving)</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h2>How to install</h2>
+            <ul>
+                <li>Use <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong></li>
+                <li>Plug in your Heltec Wireless Tracker with a USB cable</li>
+                <li>Click the <strong>INSTALL</strong> button above</li>
+                <li>Pick the USB port (usually "USB JTAG/serial debug unit")</li>
+                <li>Click <strong>INSTALL</strong> and wait until it finishes</li>
+                <li>Your tracker restarts on its own with the new firmware</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <h2>If INSTALL fails or your tracker won't start</h2>
+            <p>
+                If the installer cannot connect, put your tracker into download mode first:
+            </p>
+            <ul style="list-style: none; padding-left: 5px; margin-top: 10px;">
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">1.</span>
+                    Press <strong>both buttons together</strong> (BOOT + RST). The screen goes blank.
+                </li>
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">2.</span>
+                    Click <strong>INSTALL</strong> and wait until 100%
+                </li>
+                <li style="margin: 8px 0; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #d4a017; font-weight: bold;">3.</span>
+                    Press the <strong>RST</strong> button once to start the firmware
+                </li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 0.9em; color: #c0a060;">
+                Pressing both buttons together puts the tracker into download mode (screen goes blank).
+                After flashing, press RST once to boot into the firmware.
+            </p>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <img src="install-guide.jpg" alt="Heltec Wireless Tracker running 9M2PJU Mod LoRa APRS Tracker firmware" style="width: 100%; max-width: 500px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+            <p style="font-size: 0.85em; color: #6080a0; margin-top: 10px;">Heltec Wireless Tracker running 9M2PJU Mod LoRa APRS Tracker firmware</p>
+        </div>
+
+        <div class="info">
+            <h2>After flashing</h2>
+            <ul>
+                <li>Press the <strong>RST</strong> button once to start the firmware (or unplug and plug back in)</li>
+                <li>Settings are ready for Malaysia (9M2PJU-7, 433.400 MHz)</li>
+                <li>To change settings, turn on WiFi AP mode on the tracker</li>
+                <li>Join WiFi: <strong>LoRaTracker-AP</strong> / password: <strong>1234567890</strong></li>
+                <li>Open <strong>192.168.4.1</strong> in your browser</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h2>APRSMYSunday Net Check-In</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                This fork includes Malaysia's APRS Sunday Net check-in feature.
+                Check in to the net and query net stats right from your tracker - no phone or computer needed.
+            </p>
+            <p style="margin-bottom: 10px;"><strong>Menu path:</strong> Messages → APRSMYSunday</p>
+            <ul>
+                <li><strong>Check-In</strong> - sends check-in to <code>APRSMY</code>. With keyboard: type custom text (sent as <code>CHECK #APRSMY &lt;your text&gt;</code>). Without keyboard: sends canned <code>CHECK #APRSMYSunday Net from LoRa Tracker 73!</code></li>
+                <li><strong>Status</strong> - sends <code>STATUS</code> to query current net status</li>
+                <li><strong>Count</strong> - sends <code>COUNT</code> to query check-in count</li>
+                <li><strong>Last</strong> - sends <code>LAST</code> to query latest check-in</li>
+                <li><strong>Top</strong> - sends <code>TOP</code> to query top operators</li>
+                <li><strong>Me</strong> - sends <code>ME</code> to query your own check-in stats</li>
+            </ul>
+            <p style="margin-bottom: 0;">Replies come back as APRS messages - read them via Messages → Read.</p>
+        </div>
+
+        <div class="info">
+            <h2>SOTA &amp; POTA Reports</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                Query SOTA (Summits On The Air) and POTA (Parks On The Air) spots and alerts
+                from the <strong>9M2PJU-4 APRS Bot</strong>, right from your tracker.
+            </p>
+            <ul>
+                <li>Go to <strong>Reports → SOTA → Spots</strong> - sends <code>SOTA spots</code> to 9M2PJU-4</li>
+                <li>Go to <strong>Reports → SOTA → Alerts</strong> - sends <code>SOTA alerts</code> to 9M2PJU-4</li>
+                <li>Go to <strong>Reports → POTA → Spots</strong> - sends <code>POTA spots</code> to 9M2PJU-4</li>
+                <li>Go to <strong>Reports → POTA → Alerts</strong> - sends <code>POTA alerts</code> to 9M2PJU-4</li>
+                <li>Replies come back as APRS messages - read via <strong>Messages → Read</strong></li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 0.9em;">
+                Full user guide for 9M2PJU-4 APRS Bot: <a href="https://hamradio.my/9m2pju-aprs-bot/" target="_blank" style="color: #6ab0ff;">https://hamradio.my/9m2pju-aprs-bot/</a>
+            </p>
+        </div>
+
+        <div class="info">
+            <h2>HF Propagation Report</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                Check current <strong>HF propagation conditions</strong> from the
+                <strong>9M2PJU-4 APRS Bot</strong>, right from your tracker. Useful before a
+                SOTA activation, DXpedition, or anytime you want to know if the HF bands are open.
+            </p>
+            <ul>
+                <li>Go to <strong>Reports → HF Report</strong> - sends <code>prop</code> to 9M2PJU-4</li>
+                <li>The bot replies with current HF band conditions (MUF, solar flux, K-index, band-by-band status)</li>
+                <li>Reply comes back as an APRS message - read via <strong>Messages → Read</strong></li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 0.9em;">
+                Full user guide for 9M2PJU-4 APRS Bot: <a href="https://hamradio.my/9m2pju-aprs-bot/" target="_blank" style="color: #6ab0ff;">https://hamradio.my/9m2pju-aprs-bot/</a>
+            </p>
+        </div>
+
+        <div class="info">
+            <h2>Bulletins Reception (BLN)</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                Receive and store APRS <strong>BLN bulletins</strong> (broadcast announcements
+                addressed to <code>BLN</code> / <code>BLN0</code>-<code>BLN9</code>) in a
+                dedicated Bulletins view - separate from your personal APRS messages.
+                Bulletins are general-purpose broadcasts sent to all stations (weather alerts,
+                net announcements, emergency notices, event info) rather than to a specific callsign.
+            </p>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                <strong>Distance filter: 500 km</strong> - only bulletins from senders within
+                500 km of your GPS position are stored. The tracker caches the last known position
+                of every station it hears (from their beacon packets), then calculates the distance
+                when a BLN bulletin arrives. Senders beyond 500 km are silently dropped. If the
+                sender's position is unknown or your GPS has no lock, the bulletin is stored anyway.
+            </p>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                <strong>Dedup: full file scan</strong> - before saving, the tracker reads the
+                entire bulletins file and checks for an exact match (sender + addressee + text).
+                Duplicates from digipeated/repeated packets are skipped, so your storage stays clean.
+            </p>
+            <p style="margin-bottom: 6px;"><strong>Default: OFF</strong> - enable it in one of three ways:</p>
+            <ul>
+                <li><strong>On-device menu:</strong> Configuration &rarr; Bulletins &rarr; toggle (persists immediately, no reboot needed)</li>
+                <li><strong>Web admin UI:</strong> Station Config &rarr; "Receive Bulletins" switch &rarr; Save</li>
+                <li><strong>Edit config JSON:</strong> <code>bulletins.active: true</code> in <code>tracker_conf.json</code></li>
+            </ul>
+            <p style="margin-bottom: 6px;"><strong>Once enabled:</strong></p>
+            <ul>
+                <li><strong>View bulletins:</strong> Messages &rarr; Bulletins (N) - scroll through saved bulletins one at a time</li>
+                <li><strong>Delete all bulletins:</strong> Messages &rarr; Delete BLN (N) &rarr; confirm with Long Press or <code>&gt;</code></li>
+                <li>Bulletins are stored in flash - they survive reboots and power cycles</li>
+                <li>BLN packets are still digipeated if your digipeater is ON, regardless of this setting</li>
+                <li>No ack is sent back (BLN is broadcast, not a personal message)</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h2>Smart Beaconing - Malaysia-tuned</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                All 3 beacon profiles are retuned for Malaysian use cases with battery preservation
+                in mind. 20-33% fewer transmissions vs the original CA2RXU values.
+            </p>
+            <ul>
+                <li><strong>Runner (Profile 1)</strong> - Hiking / SOTA: 3-min beacons at rest, tuned for long battery sessions</li>
+                <li><strong>Bike (Profile 3)</strong> - Motorcycle (not bicycle): speed band 15-80 km/h for Malaysian roads &amp; highways</li>
+                <li><strong>Car (Profile 2)</strong> - Driving: fastSpeed raised to 80 km/h for PLUS highway speeds, 2.5-min beacons in traffic</li>
+            </ul>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #8ab8f0;">
+                See the README for full parameter comparison tables (original vs tuned values).
+            </p>
+        </div>
+
+        <div class="info">
+            <h2>Digipeater &amp; APRS Path (WIDE1-1)</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                Your tracker includes a <strong>Digipeater</strong> function (Extras menu) that
+                re-transmits APRS packets from other stations, extending their range - like a
+                relay node. This fork is configured with <code>WIDE1-1</code> as the path, which is
+                the correct choice for LoRa APRS in Malaysia.
+            </p>
+
+            <details>
+                <summary>What is an APRS WIDE path?</summary>
+                <div class="details-content">
+                    <p style="margin-bottom: 10px; line-height: 1.6;">
+                        When you send an APRS packet, it only travels as far as your radio signal reaches.
+                        A <strong>digipeater</strong> (digital repeater) is a station that hears your packet
+                        and re-transmits it so it can travel further - like passing a message along a
+                        chain of people. The <strong>path</strong> field in your settings tells digipeaters
+                        <em>which ones</em> may relay your packet and <em>how many times</em>.
+                    </p>
+                    <p style="margin-bottom: 10px; line-height: 1.6;">
+                        The path uses the format <code>WIDE<em>n</em>-<em>N</em></code>, where:
+                    </p>
+                    <ul>
+                        <li><strong>First number (<code>WIDE<strong>1</strong>-1</code>) = the digipeater type (alias).</strong> This tells <em>which kind</em> of digipeater may relay your packet:
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li><code>WIDE1</code> = <strong>fill-in digipeater</strong> - simple, low-power stations like another tracker or a home station. Good for one short hop to fill coverage gaps.</li>
+                                <li><code>WIDE2</code> = <strong>wide-coverage digipeater</strong> - higher-power stations on tall buildings or hills, covering a larger area.</li>
+                                <li><code>WIDE3</code> = rarely used, would require a WIDE3-capable digipeater. Almost never needed.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Second number (<code>WIDE1-<strong>1</strong></code>) = the hop counter.</strong> This tells <em>how many times</em> the packet may be relayed. Each digipeater that relays it subtracts 1. When it reaches 0, no more relaying.
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li><code>-1</code> = one hop (relayed once, then stops)</li>
+                                <li><code>-2</code> = two hops (relayed twice, then stops)</li>
+                                <li><code>-3</code> = three hops (rarely appropriate)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 10px; line-height: 1.6;">
+                        <strong>Example:</strong> You send <code>WIDE2-2</code>. Digipeater A hears it,
+                        relays it as <code>WIDE2-1</code> (subtracted 1). Digipeater B hears that, relays it
+                        as <code>WIDE2-0</code> (subtracted 1 again). Now the counter is 0 - no more
+                        digipeaters will relay it. Your packet traveled 2 hops total.
+                    </p>
+                </div>
+            </details>
+
+            <details>
+                <summary>All WIDE path combinations (WIDE1-1, WIDE1-2, WIDE2-1, WIDE2-2, etc.)</summary>
+                <div class="details-content">
+                    <div style="overflow-x: auto; margin: 10px 0;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9em;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid #1a3a6a;">
+                                    <th style="text-align: left; padding: 8px; color: #6ab0ff;">Path</th>
+                                    <th style="text-align: left; padding: 8px; color: #6ab0ff;">Type</th>
+                                    <th style="text-align: left; padding: 8px; color: #6ab0ff;">Hops</th>
+                                    <th style="text-align: left; padding: 8px; color: #6ab0ff;">Good for LoRa?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #1a3a6a;">
+                                    <td style="padding: 8px;"><code>WIDE1-1</code></td>
+                                    <td style="padding: 8px;">Fill-in</td>
+                                    <td style="padding: 8px;">1</td>
+                                    <td style="padding: 8px; color: #4caf50;"><strong>Yes - recommended</strong></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #1a3a6a;">
+                                    <td style="padding: 8px;"><code>WIDE1-2</code></td>
+                                    <td style="padding: 8px;">Fill-in</td>
+                                    <td style="padding: 8px;">2</td>
+                                    <td style="padding: 8px; color: #d4a017;">No - non-standard, fill-in digis should only do 1 hop</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #1a3a6a;">
+                                    <td style="padding: 8px;"><code>WIDE2-1</code></td>
+                                    <td style="padding: 8px;">Wide</td>
+                                    <td style="padding: 8px;">1</td>
+                                    <td style="padding: 8px; color: #d4a017;">Rarely - needs a wide digi, most LoRa trackers only do WIDE1</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #1a3a6a;">
+                                    <td style="padding: 8px;"><code>WIDE2-2</code></td>
+                                    <td style="padding: 8px;">Wide</td>
+                                    <td style="padding: 8px;">2</td>
+                                    <td style="padding: 8px; color: #ff5252;">No - too many hops for LoRa, causes congestion</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #1a3a6a;">
+                                    <td style="padding: 8px;"><code>WIDE1-1,WIDE2-1</code></td>
+                                    <td style="padding: 8px;">Fill-in + Wide</td>
+                                    <td style="padding: 8px;">2 total</td>
+                                    <td style="padding: 8px; color: #d4a017;">Only if two digipeaters are chained between you and the iGATE</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #1a3a6a;">
+                                    <td style="padding: 8px;"><code>WIDE1-1,WIDE2-2</code></td>
+                                    <td style="padding: 8px;">Fill-in + Wide</td>
+                                    <td style="padding: 8px;">3 total</td>
+                                    <td style="padding: 8px; color: #ff5252;">No - 3 hops is too much for LoRa</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #1a3a6a;">
+                                    <td style="padding: 8px;"><code>WIDE3-3</code></td>
+                                    <td style="padding: 8px;">N/A</td>
+                                    <td style="padding: 8px;">3</td>
+                                    <td style="padding: 8px; color: #ff5252;">No - never appropriate, considered interference (QRM)</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;"><code>RELAY</code></td>
+                                    <td style="padding: 8px;">Legacy</td>
+                                    <td style="padding: 8px;">1</td>
+                                    <td style="padding: 8px; color: #ff5252;">No - obsolete, no longer used in modern APRS</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="margin-top: 10px; line-height: 1.6;">
+                        <strong>Composite paths</strong> like <code>WIDE1-1,WIDE2-1</code> request a chain:
+                        first a fill-in digipeater handles the <code>WIDE1-1</code> part (1 hop), then a
+                        wide digipeater handles the <code>WIDE2-1</code> part (1 more hop). The total is 2
+                        hops. This is the classic path for VHF mobile stations in areas with no direct
+                        iGATE coverage, but on LoRa it's almost never needed.
+                    </p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Why WIDE1-1 for LoRa APRS?</summary>
+                <div class="details-content">
+                    <ul>
+                        <li><strong>LoRa range is already large</strong> (2-10 km+), so one hop is almost always enough to reach an iGATE</li>
+                        <li><strong>LoRa is slow</strong> (~300 bps). Every extra hop means another full packet transmission on the air, eating airtime</li>
+                        <li><strong>More hops = more collisions.</strong> On a shared channel, every relayed packet is another chance for two stations to transmit at once and destroy both packets</li>
+                        <li><strong>WIDE1-1 is the global standard</strong> for portable and mobile trackers - it means "I'm a low-power portable, please relay me once"</li>
+                        <li><strong>WIDE2-2 and higher</strong> are designed for VHF radio (144 MHz) where range is smaller and multiple hops are needed. On LoRa at 433 MHz, they just waste bandwidth</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>Using a friend's tracker as your relay</summary>
+                <div class="details-content">
+                    <p style="margin-bottom: 10px; line-height: 1.6;">
+                        If you have no iGATE nearby but a friend with a LoRa APRS tracker is near one, they
+                        can turn ON their digipeater to relay your packets to the iGATE.
+                    </p>
+                    <ul>
+                        <li>Both trackers must use the same path: <code>WIDE1-1</code></li>
+                        <li>The digipeater only relays packets whose path matches its own configured path</li>
+                        <li>Your friend turns ON digipeater (Extras &rarr; Digipeater). You keep yours OFF</li>
+                        <li>You must be within LoRa range of your friend (typically 2-10 km, more with line-of-sight)</li>
+                        <li>Your packet: <code>9M2PJU-7&gt;APLRT1,WIDE1-1:...</code> &rarr; friend relays as <code>9M2PJU-7&gt;APLRT1,9M2ABC*,WIDE1-1:...</code> &rarr; iGATE &rarr; APRS-IS</li>
+                    </ul>
+                    <p style="margin-top: 8px; font-size: 0.9em; color: #8ab8f0; line-height: 1.5;">
+                        The <code>*</code> after your friend's callsign means "this hop has been used."
+                        It tells other digipeaters not to relay the same packet again, preventing loops.
+                    </p>
+                    <p style="margin-top: 12px; line-height: 1.6;">
+                        <strong>How to verify:</strong> Search your callsign on
+                        <a href="https://aprs.fi" target="_blank" style="color: #6ab0ff;">aprs.fi</a>.
+                        You should see your friend's callsign with <code>*</code> in the path column -
+                        that confirms their digipeater relayed your packet.
+                    </p>
+                </div>
+            </details>
+
+            <p style="margin-top: 12px; font-size: 0.9em; color: #8ab8f0;">
+                Note: The <strong>S.O.S.</strong> menu item (Extras &rarr; S.O.S.) is a placeholder
+                in the upstream firmware - it only toggles a flag on the display and does not
+                send any distress signal. Do not rely on it for emergencies.
+            </p>
+        </div>
+
+        <div class="info">
+            <h2>Web Admin UI - Mobile-First Redesign</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                The configuration web interface (WiFi AP at <code>192.168.4.1</code>) has been redesigned
+                mobile-first for phones, tablets, and desktops, with <strong>Malaysia flag accent colors</strong>
+                on dark mode.
+            </p>
+            <ul>
+                <li><strong>Mobile-first layout</strong>: all form fields full-width on phones/tablets, stacking vertically</li>
+                <li><strong>Sticky save bar</strong>: fixed Save button at the bottom of the screen on mobile, always accessible</li>
+                <li><strong>Compact section headers</strong>: icon + title inline with divider on mobile, sidebar on desktop</li>
+                <li><strong>44px touch targets</strong> with bigger toggle switches and 16px font (prevents iOS auto-zoom)</li>
+                <li><strong>Dark mode by default</strong> with blue canton, red stripes, yellow star accents</li>
+                <li><strong>Card-style sections</strong> with red left borders for clear visual grouping</li>
+                <li><strong>Desktop-optimized</strong>: sidebar headers, multi-column fields, 900px max-width</li>
+                <li><strong>Text sponsor links</strong> instead of 49 KB base64 images</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h2>Support the project</h2>
+            <p style="margin-bottom: 12px; line-height: 1.6;">
+                This firmware mod is free and open source, maintained in
+                spare time. If it has helped you on the trail, on the road,
+                or on the air, a small donation keeps the project running.
+            </p>
+            <ul>
+                <li><a href="https://www.buymeacoffee.com/9m2pju" target="_blank" style="color: #6ab0ff;">Buy Me a Coffee (9M2PJU)</a> - https://www.buymeacoffee.com/9m2pju</li>
+                <li><a href="https://wise.com/pay/me/faizulz13" target="_blank" style="color: #6ab0ff;">Wise (9M2PJU)</a> - https://wise.com/pay/me/faizulz13</li>
+                <li><a href="https://github.com/sponsors/richonguzman" target="_blank" style="color: #6ab0ff;">GitHub Sponsors (CA2RXU - upstream author)</a></li>
+                <li><a href="http://paypal.me/richonguzman" target="_blank" style="color: #6ab0ff;">PayPal (CA2RXU - upstream author)</a></li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 0.9em; color: #8ab8f0;">
+                This page also shows a donation popup on every visit, with a
+                floating <strong>Donate</strong> button in the bottom-right corner.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>
+                Based on <a href="https://github.com/richonguzman/LoRa_APRS_Tracker" target="_blank">CA2RXU LoRa APRS Tracker</a><br>
+                Modified by <strong><a href="https://hamradio.my" target="_blank" style="color: #6ab0ff;">9M2PJU</a></strong> for Malaysia<br>
+                Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Donation popup -->
+    <div id="donateModal">
+        <div class="donate-card">
+            <button class="donate-close" aria-label="Close">&times;</button>
+            <div class="donate-heart">&#9749;</div>
+            <h2>Support 9M2PJU</h2>
+            <p>
+                This firmware mod is free and open source, maintained in
+                spare time. If it has helped you on the trail, on the road,
+                or on the air, a small donation keeps the project running.
+            </p>
+            <div class="donate-qr-label">Scan with Malaysian e-wallet</div>
+            <img class="donate-qr" src="donate-qr.jpg" alt="9M2PJU e-wallet QR code" width="200" height="200">
+            <div class="donate-qr-hint">Touch 'n Go, GrabPay, Boost, ShopeePay, Maybank QRPay</div>
+            <div class="donate-btns">
+                <a class="donate-btn-bmc" href="https://www.buymeacoffee.com/9m2pju" target="_blank" rel="noopener">Buy Me a Coffee</a>
+                <a class="donate-btn-wise" href="https://wise.com/pay/me/faizulz13" target="_blank" rel="noopener">Wise (faizulz13)</a>
+                <a class="donate-btn-gs" href="https://github.com/sponsors/richonguzman" target="_blank" rel="noopener">GitHub Sponsors (CA2RXU)</a>
+            </div>
+            <p class="donate-footer">73 and thanks for the support!</p>
+        </div>
+    </div>
+    <button id="donateFloat" aria-label="Donate">&#9749; Donate</button>
+
+    <script>
+        if (!('serial' in navigator)) {
+            document.getElementById('browserWarning').style.display = 'block';
+        }
+        // Check if ESP Web Tools custom element loaded after 3 seconds
+        setTimeout(function() {
+            var btn = document.querySelector('esp-web-install-button');
+            if (btn && btn.shadowRoot === null && !btn.querySelector('button')) {
+                // Element exists but wasn't upgraded - script was blocked
+                document.getElementById('installFallback').style.display = 'block';
+            }
+        }, 3000);
+
+        // Show reboot message after a successful install.
+        // The ewt-install-dialog element is created dynamically and appended
+        // to document.body. Its "closed" event bubbles up (bubbles:true,
+        // composed:true). When it fires, we check the dialog's _installState
+        // to determine whether the flash actually succeeded.
+        document.body.addEventListener('closed', function(e) {
+            var dialog = e.target;
+            var state = dialog && dialog._installState;
+            var finished = state && state.state === 'finished';
+            var msg = document.getElementById('rebootMessage');
+            if (msg && finished) {
+                msg.style.display = 'block';
+                msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            // Only count REAL successful installs (state === 'finished').
+            // Clicks and cancels are NOT counted.
+            if (finished) {
+                registerInstallCount();
+            }
+        });
+        // Show reboot message after a successful install (counter is independent).
+
+        // Donation popup - shows on every visit, auto-closes after 10s, plus a floating button
+        (function() {
+            var modal = document.getElementById('donateModal');
+            var floatBtn = document.getElementById('donateFloat');
+            var autoCloseTimer = null;
+            function openModal() {
+                modal.classList.add('open');
+                if (autoCloseTimer) clearTimeout(autoCloseTimer);
+                autoCloseTimer = setTimeout(closeModal, 10000);
+            }
+            function closeModal() {
+                modal.classList.remove('open');
+                if (autoCloseTimer) { clearTimeout(autoCloseTimer); autoCloseTimer = null; }
+            }
+            floatBtn.addEventListener('click', openModal);
+            modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+            document.querySelector('.donate-close').addEventListener('click', closeModal);
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+            setTimeout(openModal, 2500);
+        })();
+
+        // Install counter - shows total REAL successful installs via a
+        // Cloudflare Worker + KV (not blocked by ad blockers like counterapi.dev).
+        // Multi-project: each project has its own counter under stats.hamradio.my.
+        // This page uses the "lora-tracker" project. Other projects (esp32-fox-hunt,
+        // esp32-dx-cluster, etc.) use the same Worker with a different project name.
+        // Increment fires only when the install dialog reports state === 'finished'.
+        var registerInstallCount;
+        (function() {
+            var API_BASE = 'https://stats.hamradio.my/9m2pju-mod-lora-tracker-firmware';
+            var counterLabel = document.getElementById('counterLabel');
+            function renderCount(n) {
+                counterLabel.innerHTML = '<span class="counter-num">' + n + '</span> <span class="counter-suffix">installs via this page</span>';
+            }
+            // Show current count to every visitor on page load
+            fetch(API_BASE + '/')
+                .then(function(r) { return r.json(); })
+                .then(function(data) { renderCount(data.count || 0); })
+                .catch(function() { counterLabel.textContent = ''; });
+            // Increment on real successful install (called from closed handler)
+            registerInstallCount = function() {
+                fetch(API_BASE + '/up')
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) { renderCount(data.count || 0); })
+                    .catch(function() {});
+            };
+        })();
+    </script>
+</body>
+</html>
