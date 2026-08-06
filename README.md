@@ -6,7 +6,7 @@ This repo contains:
 - **Web installer** (`docs/`) - hosted at [lora.hamradio.my](https://lora.hamradio.my) via Cloudflare Pages
 - **Firmware binaries** (`docs/firmware/`) - Heltec Wireless Tracker build artifacts
 
-The full source code lives in a private repository. This public repo is updated
+This public repo is updated
 automatically by CI whenever new firmware is built, so users always have access to
 the latest web installer and binaries.
 
