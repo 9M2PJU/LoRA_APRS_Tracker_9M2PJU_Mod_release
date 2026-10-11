@@ -14,3 +14,9 @@ blank.
 
 Based on [CA2RXU LoRa APRS Tracker](https://github.com/richonguzman/LoRa_APRS_Tracker)
 by richonguzman.
+
+## Support
+
+If you find this project useful, please consider supporting it:
+
+[![Donate with PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9m2pju%40hamradio.my&currency_code=MYR&item_name=LoRA_APRS_Tracker_9M2PJU_Mod_release)
